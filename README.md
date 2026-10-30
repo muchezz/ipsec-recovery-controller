@@ -1,6 +1,6 @@
 # IPsec Recovery Controller
 
-A small, safe Alertmanager webhook controller for strongSwan IPsec diagnostics.
+A small, safe Alertmanager webhook controller for strongSwan IPsec diagnostics. Requires Python 3.10 or later; gateway inspection and the privileged helper require Linux.
 
 **v0.3.0 is read-only.** It validates Alertmanager v4 webhooks, maps alert labels to configured connections, records audit decisions, and exposes Prometheus metrics. `observe` does not connect to gateways. `dry-run` inspects legacy strongSwan gateways over SSH or a gateway-local HTTPS agent. Neither mode changes IPsec state.
 
@@ -41,3 +41,5 @@ Apache License 2.0. See LICENSE.
 
 
 For root-only legacy stroke sockets, use the optional fixed-operation [privileged diagnostics helper](docs/privileged-diagnostics.md). The HTTPS agent stays unprivileged and can retain the direct backend where permissions allow.
+
+See the [Python compatibility review](docs/python-compatibility.md) for tested interpreters and dependency versions.

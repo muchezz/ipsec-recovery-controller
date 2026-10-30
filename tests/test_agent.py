@@ -91,8 +91,8 @@ def certificate_der():
     cert = (x509.CertificateBuilder().subject_name(x509.Name([
         x509.NameAttribute(NameOID.COMMON_NAME, "controller")])).issuer_name(x509.Name([
         x509.NameAttribute(NameOID.COMMON_NAME, "controller")])).public_key(key.public_key())
-        .serial_number(x509.random_serial_number()).not_valid_before(dt.datetime.now(dt.UTC) - dt.timedelta(days=1))
-        .not_valid_after(dt.datetime.now(dt.UTC) + dt.timedelta(days=1))
+        .serial_number(x509.random_serial_number()).not_valid_before(dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=1))
+        .not_valid_after(dt.datetime.now(dt.timezone.utc) + dt.timedelta(days=1))
         .sign(key, hashes.SHA256()))
     return cert.public_bytes(serialization.Encoding.DER)
 
@@ -125,7 +125,7 @@ def test_local_allowlist_and_bounded_output(monkeypatch):
 
 def issue_cert(ca_key, ca_cert, name, *, expired=False, server=False):
     key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
-    now = dt.datetime.now(dt.UTC)
+    now = dt.datetime.now(dt.timezone.utc)
     builder = (x509.CertificateBuilder().subject_name(x509.Name([
         x509.NameAttribute(NameOID.COMMON_NAME, name)]))
         .issuer_name(ca_cert.subject).public_key(key.public_key())
@@ -147,7 +147,7 @@ def write_pem(path, key, cert):
 @pytest.fixture
 def tls_server(tmp_path):
     ca_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
-    now = dt.datetime.now(dt.UTC)
+    now = dt.datetime.now(dt.timezone.utc)
     ca = (x509.CertificateBuilder().subject_name(x509.Name([
         x509.NameAttribute(NameOID.COMMON_NAME, "test CA")]))
         .issuer_name(x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, "test CA")]))
@@ -238,8 +238,12 @@ def test_live_mtls_and_identity(tls_server):
         assert client.get(url + "/v1/healthz").status_code == 403
     for name in (None, "expired", "untrusted"):
         with (httpx.Client(verify=context(name), trust_env=False) as client,
-              pytest.raises(httpx.RemoteProtocolError)):
+              # TLS rejection surfaces differently across Python/OpenSSL builds.
+              pytest.raises((httpx.RemoteProtocolError, httpx.ReadError,
+                             httpx.WriteError, httpx.ConnectError))):
             client.get(url + "/v1/healthz")
+        with httpx.Client(verify=context("client"), trust_env=False) as authorized:
+            assert authorized.get(url + "/v1/healthz").status_code == 200
     with (httpx.Client(verify=True, trust_env=False) as client,
           pytest.raises(httpx.ConnectError)):
         client.get(url + "/v1/healthz")
