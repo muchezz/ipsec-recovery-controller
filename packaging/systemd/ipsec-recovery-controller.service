@@ -1,5 +1,5 @@
 [Unit]
-Description=IPsec Recovery Controller (read-only Phase 1)
+Description=IPsec Recovery Controller (read-only diagnostics)
 After=network-online.target
 Wants=network-online.target
 

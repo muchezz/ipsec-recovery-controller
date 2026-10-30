@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import ipaddress
 import os
+import re
 from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class StrictModel(BaseModel):
@@ -21,18 +23,49 @@ class Gateway(StrictModel):
     host: str
     ssh_user: str = "ipsec-controller"
     adapter: Literal["auto", "legacy_ipsec", "swanctl"] = "auto"
+    ssh_port: int = Field(default=22, ge=1, le=65535)
+    ssh_identity_file: str | None = None
+    ssh_known_hosts_file: str | None = None
+    ssh_timeout_seconds: int = Field(default=10, ge=1, le=60)
+
+    @field_validator("host")
+    @classmethod
+    def valid_host(cls, value: str) -> str:
+        try:
+            ipaddress.ip_address(value)
+        except ValueError:
+            if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.-]{0,252}", value):
+                raise ValueError("host must be an IP address or hostname") from None
+        return value
+
+    @field_validator("ssh_user")
+    @classmethod
+    def valid_user(cls, value: str) -> str:
+        if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_.-]*", value):
+            raise ValueError("invalid SSH user")
+        return value
+
+    @field_validator("ssh_identity_file", "ssh_known_hosts_file")
+    @classmethod
+    def absolute_ssh_path(cls, value: str | None) -> str | None:
+        if value is not None and not Path(value).is_absolute():
+            raise ValueError("SSH file paths must be absolute")
+        return value
 
 
 class Connection(StrictModel):
     gateway: str
     ike_connection: str
     child_connection: str
+    local_selector: str | None = None
+    remote_selector: str | None = None
     recovery_enabled: bool = False
 
 
 class AlertRule(StrictModel):
     name: str
     connection: str
+    match_labels: dict[str, str] = Field(default_factory=dict)
 
 
 class Config(StrictModel):
@@ -51,8 +84,9 @@ class Config(StrictModel):
         for rule in self.alerts:
             if rule.connection not in self.connections:
                 raise ValueError(f"alert {rule.name!r} references unknown connection")
-        if len({rule.name for rule in self.alerts}) != len(self.alerts):
-            raise ValueError("alert names must be unique")
+        identities = [(rule.name, tuple(sorted(rule.match_labels.items()))) for rule in self.alerts]
+        if len(set(identities)) != len(identities):
+            raise ValueError("alert name and label match must be unique")
 
 
 def load_config(path: str | Path) -> Config:

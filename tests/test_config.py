@@ -1,6 +1,6 @@
 import pytest
 
-from ipsec_recovery_controller.config import AlertRule, Config, Connection
+from ipsec_recovery_controller.config import AlertRule, Config, Connection, Gateway
 
 
 def test_unknown_gateway_rejected():
@@ -18,3 +18,8 @@ def test_unknown_connection_rejected():
 def test_recovery_mode_not_accepted():
     with pytest.raises(ValueError):
         Config(mode="recovery")
+
+
+def test_ssh_option_in_host_rejected():
+    with pytest.raises(ValueError):
+        Gateway(host="-oProxyCommand=evil")
