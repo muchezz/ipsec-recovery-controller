@@ -1,0 +1,19 @@
+# Example only. No production addresses or secrets.
+mode: dry-run
+server:
+  host: 127.0.0.1
+  port: 8765
+gateways:
+  gateway-01:
+    host: 192.0.2.10
+    ssh_user: ipsec-controller
+    adapter: auto
+connections:
+  partner-01:
+    gateway: gateway-01
+    ike_connection: partner-ike
+    child_connection: partner-child
+    recovery_enabled: false
+alerts:
+  - name: ExampleIPsecTunnelMissing
+    connection: partner-01

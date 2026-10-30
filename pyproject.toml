@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling>=1.25,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ipsec-recovery-controller"
+version = "0.1.0"
+description = "Safe, policy-driven Alertmanager IPsec recovery evaluation controller"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.30,<1", "pydantic>=2.8,<3", "PyYAML>=6,<7", "prometheus-client>=0.20,<1"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10", "httpx>=0.27,<1", "ruff>=0.8,<1"]
+
+[project.scripts]
+ipsec-recovery-controller = "ipsec_recovery_controller.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ipsec_recovery_controller"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
