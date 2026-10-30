@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
 from ipsec_recovery_controller.api.app import create_app
-from ipsec_recovery_controller.config import Config, Gateway, Connection, AlertRule
+from ipsec_recovery_controller.config import AlertRule, Config, Connection, Gateway
 
 CONFIG = Config(
     gateways={"g": Gateway(host="192.0.2.10")},

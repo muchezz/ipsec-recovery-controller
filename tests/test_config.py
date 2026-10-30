@@ -1,5 +1,6 @@
 import pytest
-from ipsec_recovery_controller.config import Config, Connection, AlertRule
+
+from ipsec_recovery_controller.config import AlertRule, Config, Connection
 
 
 def test_unknown_gateway_rejected():

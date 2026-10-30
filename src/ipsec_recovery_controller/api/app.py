@@ -6,8 +6,8 @@ import logging
 from typing import Any
 
 from fastapi import FastAPI, HTTPException, Request
-from pydantic import BaseModel, ConfigDict, ValidationError
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, generate_latest
+from pydantic import BaseModel, ConfigDict, ValidationError
 from starlette.responses import Response
 
 from ipsec_recovery_controller.config import Config

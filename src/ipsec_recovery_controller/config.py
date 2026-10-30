@@ -58,7 +58,7 @@ class Config(StrictModel):
 def load_config(path: str | Path) -> Config:
     raw = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
-        raise ValueError("configuration must be a YAML mapping")
+        raise TypeError("configuration must be a YAML mapping")
     config = Config.model_validate(raw)
     # Inject secret from environment, never store it in a public configuration.
     token = os.getenv("IPSEC_CONTROLLER_WEBHOOK_TOKEN")
