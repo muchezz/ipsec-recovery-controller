@@ -15,3 +15,6 @@ When legacy CHILD SAs share the same name, configure optional `local_selector` a
 No recovery policy runs in this release. `observe` validates, audits, and counts events without gateway contact. `dry-run` inspects. Agent outages, certificate failures, timeouts, mapping mismatches, and command errors fail closed as `inspection_failed` with a structured error code. They never trigger recovery.
 The service is single-process. No queue or persistent deduplication is implemented yet.
 The HTTP response means the event was evaluated in-process, not durably queued.
+
+
+For root-only legacy stroke sockets, use the optional fixed-operation [privileged diagnostics helper](privileged-diagnostics.md). The HTTPS agent stays unprivileged and can retain the direct backend where permissions allow.

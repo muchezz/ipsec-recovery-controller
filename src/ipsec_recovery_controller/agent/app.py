@@ -11,6 +11,7 @@ from ipsec_recovery_controller.agent.config import AgentConfig
 from ipsec_recovery_controller.config import Gateway
 from ipsec_recovery_controller.diagnostics.inspection import evaluate_snapshot
 from ipsec_recovery_controller.diagnostics.models import GatewaySnapshot
+from ipsec_recovery_controller.gateway.helper import HelperTransport
 from ipsec_recovery_controller.gateway.local import LocalTransport
 from ipsec_recovery_controller.gateway.ssh import InspectionError
 
@@ -55,9 +56,13 @@ def filter_snapshot(snapshot: GatewaySnapshot, mappings) -> GatewaySnapshot:
                            snapshot.source, snapshot.connections_known)
 
 
-def create_app(config: AgentConfig, transport: LocalTransport | None = None) -> FastAPI:
+def create_app(config: AgentConfig, transport: LocalTransport | HelperTransport | None = None) -> FastAPI:
     config.validate_mappings()
-    transport = transport or LocalTransport(config.ipsec_binary, config.command_timeout_seconds)
+    transport = transport or (
+        HelperTransport(config.helper_socket, config.helper_timeout_seconds)
+        if config.inspection_backend == "helper" else
+        LocalTransport(config.ipsec_binary, config.command_timeout_seconds)
+    )
     app = FastAPI(title="IPsec Recovery Agent", version="0.3.0", docs_url=None, redoc_url=None)
 
     def authorize(request: Request) -> None:

@@ -52,7 +52,7 @@ def validate_response(data: object, expected: Connection) -> GatewaySnapshot:
         for sa in associations:
             if sa.name != name or sa.state not in states or not sa.identifier.isdecimal():
                 raise ValueError("invalid association")
-            if any(value is not None and value < 0 for value in (sa.bytes_in, sa.bytes_out)):
+            if any(value is not None and value < 0 for value in (sa.bytes_in, sa.bytes_out, sa.packets_in, sa.packets_out)):
                 raise ValueError("negative counter")
     if any(sa.parent_ike_id is not None for sa in snapshot.ike_sas):
         raise ValueError("invalid IKE parent")

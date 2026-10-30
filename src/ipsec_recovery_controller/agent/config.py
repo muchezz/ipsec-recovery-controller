@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+from typing import Literal
 
 import yaml
 from pydantic import Field, field_validator
@@ -25,11 +26,14 @@ class AgentConfig(StrictModel):
     server_key: str
     client_ca: str
     allowed_client_identity: str
+    inspection_backend: Literal["direct", "helper"] = "direct"
+    helper_socket: str = "/run/ipsec-recovery-helper.sock"
+    helper_timeout_seconds: float = Field(default=15, gt=0, le=120)
     ipsec_binary: str = "/usr/sbin/ipsec"
     command_timeout_seconds: float = Field(default=10, gt=0, le=120)
     connections: dict[str, AgentConnection] = Field(default_factory=dict)
 
-    @field_validator("server_cert", "server_key", "client_ca", "ipsec_binary")
+    @field_validator("server_cert", "server_key", "client_ca", "ipsec_binary", "helper_socket")
     @classmethod
     def absolute_path(cls, value: str) -> str:
         if not Path(value).is_absolute():

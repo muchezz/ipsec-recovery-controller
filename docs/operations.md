@@ -27,3 +27,6 @@ The agent API is versioned at `/v1`. A controller using agent transport requires
 
 
 Agent service hardening: keep configuration and TLS files outside service-writable state directories. Use root-owned configuration directories (0750) and key/config files (0640, group ipsec-agent), with no service-account write access. Ensure configured paths remain accessible with ProtectHome and ProtectSystem enabled. Test diagnostic access as the service account; do not add sudo or capabilities to work around permission errors. AF_UNIX remains available for the strongSwan socket and AF_INET/AF_INET6 for HTTPS. The unit retries failures up to five times per minute; configuration or certificate startup failures remain visible in the journal. Correct the files, then reset the failed unit and restart. StrongSwan availability is checked on demand; agent health indicates HTTPS service availability, not tunnel health. Validate the unit against the target distribution's systemd version before enabling it.
+
+
+For root-only legacy stroke sockets, use the optional fixed-operation [privileged diagnostics helper](privileged-diagnostics.md). The HTTPS agent stays unprivileged and can retain the direct backend where permissions allow.

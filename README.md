@@ -38,3 +38,6 @@ Keep production YAML, credentials, and SSH keys outside the public repository. L
 ## License
 
 Apache License 2.0. See LICENSE.
+
+
+For root-only legacy stroke sockets, use the optional fixed-operation [privileged diagnostics helper](docs/privileged-diagnostics.md). The HTTPS agent stays unprivileged and can retain the direct backend where permissions allow.

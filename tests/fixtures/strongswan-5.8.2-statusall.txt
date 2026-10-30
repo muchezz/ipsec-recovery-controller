@@ -1,0 +1,347 @@
+Status of IKE charon daemon (strongSwan 5.8.2, Linux x86_64):
+Connections:
+synthetic-ike-1:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-2:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-3:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-4:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-5:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-6:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-7:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-8:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-9:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-10:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-11:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-12:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-13:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-14:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-15:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-16:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-17:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-18:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-19:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-20:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-21:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-22:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-23:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-24:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-25:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-26:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-27:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-28:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-29:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-30:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-31:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-32:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-33:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-34:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-35:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-36:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-37:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-38:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-39:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-40:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-41:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-42:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-43:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-44:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-45:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-46:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-47:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-48:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-49:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-50:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-51:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-52:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-53:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-54:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-55:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-56:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-57:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-58:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-59:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-60:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-61:  192.0.2.1...198.51.100.1  IKEv2
+synthetic-ike-62:  192.0.2.1...198.51.100.1  IKEv2
+Security Associations (51 up, 11 connecting):
+synthetic-ike-1[1]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-1[1]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-1{10}: INSTALLED, TUNNEL, reqid 1, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-1{10}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-1{10}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-child-1{11}: INSTALLED, TUNNEL, reqid 1, ESP in UDP SPIs: 01020304_i 05060708_o
+synthetic-child-1{11}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-1{11}: 10.1.80.1/32 === 203.0.113.0/24
+synthetic-ike-2[2]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-2[2]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-2{20}: INSTALLED, TUNNEL, reqid 2, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-2{20}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-2{20}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-3[3]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-3[3]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-3{30}: INSTALLED, TUNNEL, reqid 3, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-3{30}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-3{30}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-4[4]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-4[4]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-4{40}: INSTALLED, TUNNEL, reqid 4, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-4{40}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-4{40}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-5[5]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-5[5]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-5{50}: INSTALLED, TUNNEL, reqid 5, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-5{50}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-5{50}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-6[6]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-6[6]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-6{60}: INSTALLED, TUNNEL, reqid 6, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-6{60}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-6{60}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-7[7]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-7[7]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-7{70}: INSTALLED, TUNNEL, reqid 7, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-7{70}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-7{70}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-8[8]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-8[8]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-8{80}: INSTALLED, TUNNEL, reqid 8, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-8{80}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-8{80}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-9[9]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-9[9]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-9{90}: INSTALLED, TUNNEL, reqid 9, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-9{90}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-9{90}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-10[10]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-10[10]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-10{100}: INSTALLED, TUNNEL, reqid 10, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-10{100}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-10{100}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-11[11]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-11[11]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-11{110}: INSTALLED, TUNNEL, reqid 11, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-11{110}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-11{110}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-12[12]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-12[12]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-12{120}: INSTALLED, TUNNEL, reqid 12, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-12{120}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-12{120}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-13[13]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-13[13]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-13{130}: INSTALLED, TUNNEL, reqid 13, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-13{130}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-13{130}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-14[14]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-14[14]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-14{140}: INSTALLED, TUNNEL, reqid 14, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-14{140}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-14{140}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-15[15]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-15[15]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-15{150}: INSTALLED, TUNNEL, reqid 15, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-15{150}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-15{150}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-16[16]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-16[16]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-16{160}: INSTALLED, TUNNEL, reqid 16, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-16{160}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-16{160}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-17[17]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-17[17]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-17{170}: INSTALLED, TUNNEL, reqid 17, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-17{170}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-17{170}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-18[18]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-18[18]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-18{180}: INSTALLED, TUNNEL, reqid 18, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-18{180}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-18{180}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-19[19]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-19[19]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-19{190}: INSTALLED, TUNNEL, reqid 19, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-19{190}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-19{190}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-20[20]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-20[20]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-20{200}: INSTALLED, TUNNEL, reqid 20, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-20{200}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-20{200}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-21[21]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-21[21]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-21{210}: INSTALLED, TUNNEL, reqid 21, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-21{210}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-21{210}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-22[22]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-22[22]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-22{220}: INSTALLED, TUNNEL, reqid 22, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-22{220}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-22{220}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-23[23]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-23[23]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-23{230}: INSTALLED, TUNNEL, reqid 23, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-23{230}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-23{230}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-24[24]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-24[24]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-24{240}: INSTALLED, TUNNEL, reqid 24, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-24{240}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-24{240}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-25[25]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-25[25]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-25{250}: INSTALLED, TUNNEL, reqid 25, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-25{250}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-25{250}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-26[26]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-26[26]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-26{260}: INSTALLED, TUNNEL, reqid 26, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-26{260}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-26{260}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-27[27]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-27[27]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-27{270}: INSTALLED, TUNNEL, reqid 27, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-27{270}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-27{270}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-28[28]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-28[28]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-28{280}: INSTALLED, TUNNEL, reqid 28, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-28{280}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-28{280}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-29[29]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-29[29]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-29{290}: INSTALLED, TUNNEL, reqid 29, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-29{290}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-29{290}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-30[30]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-30[30]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-30{300}: INSTALLED, TUNNEL, reqid 30, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-30{300}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-30{300}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-31[31]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-31[31]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-31{310}: INSTALLED, TUNNEL, reqid 31, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-31{310}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-31{310}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-32[32]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-32[32]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-32{320}: INSTALLED, TUNNEL, reqid 32, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-32{320}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-32{320}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-33[33]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-33[33]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-33{330}: INSTALLED, TUNNEL, reqid 33, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-33{330}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-33{330}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-34[34]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-34[34]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-34{340}: INSTALLED, TUNNEL, reqid 34, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-34{340}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-34{340}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-35[35]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-35[35]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-35{350}: INSTALLED, TUNNEL, reqid 35, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-35{350}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-35{350}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-36[36]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-36[36]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-36{360}: INSTALLED, TUNNEL, reqid 36, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-36{360}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-36{360}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-37[37]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-37[37]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-37{370}: INSTALLED, TUNNEL, reqid 37, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-37{370}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-37{370}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-38[38]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-38[38]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-38{380}: INSTALLED, TUNNEL, reqid 38, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-38{380}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-38{380}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-39[39]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-39[39]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-39{390}: INSTALLED, TUNNEL, reqid 39, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-39{390}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-39{390}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-40[40]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-40[40]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-40{400}: INSTALLED, TUNNEL, reqid 40, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-40{400}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-40{400}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-41[41]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-41[41]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-41{410}: INSTALLED, TUNNEL, reqid 41, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-41{410}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-41{410}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-42[42]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-42[42]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-42{420}: INSTALLED, TUNNEL, reqid 42, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-42{420}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-42{420}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-43[43]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-43[43]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-43{430}: INSTALLED, TUNNEL, reqid 43, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-43{430}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-43{430}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-44[44]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-44[44]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-44{440}: INSTALLED, TUNNEL, reqid 44, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-44{440}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-44{440}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-45[45]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-45[45]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-45{450}: INSTALLED, TUNNEL, reqid 45, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-45{450}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-45{450}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-46[46]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-46[46]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-46{460}: INSTALLED, TUNNEL, reqid 46, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-46{460}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-46{460}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-47[47]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-47[47]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-47{470}: INSTALLED, TUNNEL, reqid 47, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-47{470}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-47{470}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-48[48]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-48[48]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-48{480}: INSTALLED, TUNNEL, reqid 48, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-48{480}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-48{480}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-49[49]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-49[49]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-49{490}: INSTALLED, TUNNEL, reqid 49, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-49{490}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-49{490}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-50[50]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-50[50]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-50{500}: INSTALLED, TUNNEL, reqid 50, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-50{500}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-50{500}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-51[51]: ESTABLISHED 1 minute ago, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-51[51]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-51{510}: INSTALLED, TUNNEL, reqid 51, ESP SPIs: 01020304_i 05060708_o
+synthetic-child-51{510}: AES_CBC_256/HMAC_SHA2_256_128, 1234 bytes_i (12 pkts, 1s ago), 5678 bytes_o (34 pkts, 2s ago), rekeying in 30 minutes
+synthetic-child-51{510}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-52[52]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-52[52]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-child-52{520}: CREATED, TUNNEL, reqid 52
+synthetic-child-52{520}: 10.1.80.1/32 === 10.1.66.0/24
+synthetic-ike-53[53]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-53[53]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-54[54]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-54[54]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-55[55]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-55[55]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-56[56]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-56[56]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-57[57]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-57[57]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-58[58]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-58[58]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-59[59]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-59[59]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-60[60]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-60[60]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-61[61]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-61[61]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r
+synthetic-ike-62[62]: CONNECTING, 192.0.2.1[192.0.2.1]...198.51.100.1[198.51.100.1]
+synthetic-ike-62[62]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r

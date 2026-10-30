@@ -18,6 +18,8 @@ test = ["pytest>=8,<10", "httpx>=0.27,<1", "ruff>=0.8,<1"]
 ipsec-recovery-controller = "ipsec_recovery_controller.main:main"
 ipsec-recovery-agent = "ipsec_recovery_controller.agent.cli:main"
 
+ipsec-recovery-diagnostics-helper = "ipsec_recovery_controller.helper.server:main"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/ipsec_recovery_controller"]
 
