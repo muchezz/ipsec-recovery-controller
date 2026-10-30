@@ -1,0 +1,20 @@
+# Example only. Keep real addresses, certificates, and mappings outside the repository.
+server:
+  host: 192.0.2.10
+  port: 8766
+server_cert: /etc/ipsec-recovery-agent/tls/server.crt
+server_key: /etc/ipsec-recovery-agent/tls/server.key
+client_ca: /etc/ipsec-recovery-agent/tls/client-ca.crt
+allowed_client_identity: controller.example.invalid
+# Use inspection_backend: helper with the separately installed diagnostic helper
+# when direct unprivileged stroke access is unavailable.
+inspection_backend: direct
+ipsec_binary: /usr/sbin/ipsec
+command_timeout_seconds: 10
+connections:
+  example-connection:
+    ike_connection: example-ike
+    child_connection: example-child
+    # Optional when the same CHILD name represents several selectors:
+    # local_selector: 192.0.2.0/24
+    # remote_selector: 198.51.100.0/24
