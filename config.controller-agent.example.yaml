@@ -1,0 +1,27 @@
+# Example only. Match connection IDs and selectors with each agent's local allowlist.
+mode: dry-run
+server:
+  host: 127.0.0.1
+  port: 8765
+gateways:
+  example-gateway:
+    transport: agent
+    adapter: legacy_ipsec
+    agent:
+      url: https://gateway.example.invalid:8766
+      ca_file: /etc/ipsec-recovery-controller/tls/agent-ca.crt
+      client_cert: /etc/ipsec-recovery-controller/tls/client.crt
+      client_key: /etc/ipsec-recovery-controller/tls/client.key
+      connect_timeout_seconds: 3
+      request_timeout_seconds: 10
+      max_response_bytes: 2000000
+connections:
+  example-connection:
+    gateway: example-gateway
+    ike_connection: example-ike
+    child_connection: example-child
+alerts:
+  - name: ExampleIPsecTunnelMissing
+    connection: example-connection
+    match_labels:
+      peer: example-partner
