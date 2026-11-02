@@ -5,6 +5,7 @@ from __future__ import annotations
 from ipsec_recovery_controller.adapters.legacy_ipsec import LegacyIPsecAdapter
 from ipsec_recovery_controller.config import Config, Connection
 from ipsec_recovery_controller.diagnostics.models import Diagnostic, GatewaySnapshot
+from ipsec_recovery_controller.gateway.https_agent import HTTPSAgentTransport
 from ipsec_recovery_controller.gateway.ssh import GatewayTransport, InspectionError, SSHTransport
 
 
@@ -69,5 +70,8 @@ class Inspector:
         gateway = self.config.gateways[connection.gateway]
         if gateway.adapter == "swanctl":
             raise InspectionError("adapter_unavailable")
+        if gateway.transport == "agent":
+            snapshot = HTTPSAgentTransport().inspect(gateway, connection_name, connection)
+            return evaluate_snapshot(connection, snapshot)
         snapshot = LegacyIPsecAdapter(self.transport).inspect(gateway)
         return evaluate_snapshot(connection, snapshot)

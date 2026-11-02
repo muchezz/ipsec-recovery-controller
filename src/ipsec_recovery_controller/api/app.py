@@ -128,7 +128,7 @@ def evaluate(config: Config, payload: Webhook, inspector: Inspector | None = Non
 
 
 def create_app(config: Config, inspector: Inspector | None = None) -> FastAPI:
-    app = FastAPI(title="IPsec Recovery Controller", version="0.2.0", docs_url=None, redoc_url=None)
+    app = FastAPI(title="IPsec Recovery Controller", version="0.3.0", docs_url=None, redoc_url=None)
 
     @app.get("/healthz")
     async def healthz() -> dict[str, str]:

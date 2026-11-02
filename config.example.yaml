@@ -5,6 +5,7 @@ server:
   port: 8765
 gateways:
   gateway-01:
+    transport: ssh # default; old v0.2.0 files work without this line
     host: 192.0.2.10
     ssh_user: ipsec-controller
     ssh_port: 22

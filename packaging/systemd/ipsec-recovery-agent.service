@@ -1,0 +1,40 @@
+[Unit]
+Description=IPsec Recovery Agent (read-only gateway diagnostics)
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=ipsec-agent
+Group=ipsec-agent
+# Add a supplementary group only if the distribution's strongSwan control socket needs it.
+Environment=IPSEC_AGENT_CONFIG=/etc/ipsec-recovery-agent/config.yaml
+ExecStart=/opt/ipsec-recovery-agent/current/bin/ipsec-recovery-agent
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectClock=true
+RestrictRealtime=true
+RestrictNamespaces=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+LockPersonality=true
+UMask=0077
+ReadOnlyPaths=/etc/ipsec-recovery-agent
+WorkingDirectory=/var/lib/ipsec-recovery-agent
+StateDirectory=ipsec-recovery-agent
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+# Same TLS and connection settings as config.agent.example.yaml.
+server:
+  host: 127.0.0.1
+  port: 8766
+server_cert: /etc/ipsec-recovery-agent/tls/server.crt
+server_key: /etc/ipsec-recovery-agent/tls/server.key
+client_ca: /etc/ipsec-recovery-agent/tls/client-ca.crt
+allowed_client_identity: controller.example.invalid
+inspection_backend: helper
+helper_socket: /run/ipsec-recovery-helper.sock
+helper_timeout_seconds: 15
+connections:
+  example-connection:
+    ike_connection: example-ike
+    child_connection: example-child

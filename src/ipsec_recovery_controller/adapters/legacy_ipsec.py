@@ -10,13 +10,14 @@ from ipsec_recovery_controller.diagnostics.models import Association, GatewaySna
 from ipsec_recovery_controller.gateway.ssh import GatewayTransport, InspectionError
 
 _HEADER = re.compile(r"^Security Associations \((\d+) up, (\d+) connecting\):$")
-_SA = re.compile(r"^\s+([^\s\[\]{}:]+)([\[{])(\d+)[\]}]:\s*(.*)$")
-_CONNECTION = re.compile(r"^\s+([^\s\[\]{}:]+):\s+.+$")
+_SA = re.compile(r"^\s*([^\s\[\]{}:]+)(?:\[(\d+)\]|\{(\d+)\}):\s*(.*)$")
+_CONNECTION = re.compile(r"^\s*([^\s\[\]{}:]+):\s+.+$")
 _IKE_STATES = {"ESTABLISHED", "CONNECTING", "CREATED", "REKEYING", "DELETING"}
 _CHILD_STATES = {"INSTALLED", "CREATED", "REKEYING", "ROUTED", "DELETING"}
-_STATE = re.compile(r"\b(ESTABLISHED|CONNECTING|CREATED|REKEYING|DELETING|INSTALLED|ROUTED)\b")
+_STATE = re.compile(r"^(ESTABLISHED|CONNECTING|CREATED|REKEYING|DELETING|INSTALLED|ROUTED)\b")
 _COUNTER = re.compile(r"\b(\d+) bytes_([io])\b")
-_SPI = re.compile(r"\b(?:IKE(?:v[12])?|ESP) SPIs?:\s*([^,]+)")
+_PACKETS = re.compile(r"\b\d+ bytes_([io])\s+\((\d+) pkts?\b")
+_SPI = re.compile(r"\b(?:IKE(?:v[12])?|ESP(?: in UDP)?) SPIs?:\s*([^,]+)")
 
 
 def parse_status(output: str, source: str = "ipsec statusall") -> GatewaySnapshot:
@@ -46,17 +47,28 @@ def parse_status(output: str, source: str = "ipsec statusall") -> GatewaySnapsho
             section = "sas"
             last_sa = None
             continue
+        if stripped in {"Routed Connections:", "Shunted Connections:"}:
+            if header is not None:
+                raise InspectionError("malformed_output")
+            section = "other"
+            continue
         if section == "sas":
             if stripped == "none" and header == (0, 0) and not ikes and not children:
                 continue
             match = _SA.match(line)
             if match:
-                name, kind, identifier, body = match.groups()
+                name, ike_id, child_id, body = match.groups()
+                kind, identifier = ("[", ike_id) if ike_id is not None else ("{", child_id)
+                if not body:
+                    raise InspectionError("malformed_output", "empty association record")
                 state = _STATE.search(body)
                 if state:
                     valid = _IKE_STATES if kind == "[" else _CHILD_STATES
                     if state[1] not in valid:
                         raise InspectionError("malformed_output", "invalid SA state")
+                    records = ikes if kind == "[" else children
+                    if any(sa.identifier == identifier for sa in records):
+                        raise InspectionError("malformed_output", "duplicate association ID")
                     association = Association(
                         name, identifier, state[1],
                         parent_ike_id=current_ike if kind == "{" else None,
@@ -78,7 +90,10 @@ def parse_status(output: str, source: str = "ipsec statusall") -> GatewaySnapsho
                         raise InspectionError("malformed_output", "orphaned SA detail")
                     spi_match = _SPI.search(body)
                     counters = {direction: int(value) for value, direction in _COUNTER.findall(body)}
+                    packets = {direction: int(value) for direction, value in _PACKETS.findall(body)}
                     selectors = body.split("===", 1) if "===" in body else None
+                    if selectors and not all(value.strip() for value in selectors):
+                        raise InspectionError("malformed_output", "incomplete selectors")
                     target[last_sa[1]] = replace(
                         previous,
                         spi=spi_match[1].strip() if spi_match else previous.spi,
@@ -86,6 +101,8 @@ def parse_status(output: str, source: str = "ipsec statusall") -> GatewaySnapsho
                         remote_selector=selectors[1].strip() if selectors else previous.remote_selector,
                         bytes_in=counters.get("i", previous.bytes_in),
                         bytes_out=counters.get("o", previous.bytes_out),
+                        packets_in=packets.get("i", previous.packets_in),
+                        packets_out=packets.get("o", previous.packets_out),
                     )
                 else:
                     raise InspectionError("malformed_output", "SA detail has no parent")

@@ -1,0 +1,14 @@
+[Unit]
+Description=IPsec fixed diagnostic helper socket
+
+[Socket]
+ListenStream=/run/ipsec-recovery-helper.sock
+SocketUser=root
+SocketGroup=ipsec-agent
+SocketMode=0660
+Backlog=4
+RemoveOnStop=true
+Service=ipsec-recovery-diagnostics-helper.service
+
+[Install]
+WantedBy=sockets.target

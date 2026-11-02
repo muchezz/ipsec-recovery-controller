@@ -15,6 +15,8 @@ class Association:
     remote_selector: str | None = None
     bytes_in: int | None = None
     bytes_out: int | None = None
+    packets_in: int | None = None
+    packets_out: int | None = None
 
 
 @dataclass(frozen=True)
