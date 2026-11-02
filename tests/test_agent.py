@@ -12,7 +12,7 @@ import uvicorn
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.x509.oid import NameOID
+from cryptography.x509.oid import ExtendedKeyUsageOID, NameOID
 from fastapi.testclient import TestClient
 
 from ipsec_recovery_controller.agent.app import create_app
@@ -132,6 +132,18 @@ def issue_cert(ca_key, ca_cert, name, *, expired=False, server=False):
         .serial_number(x509.random_serial_number())
         .not_valid_before(now - dt.timedelta(days=3 if expired else 1))
         .not_valid_after(now - dt.timedelta(days=1) if expired else now + dt.timedelta(days=2)))
+    builder = (builder
+        .add_extension(x509.BasicConstraints(ca=False, path_length=None), True)
+        .add_extension(x509.SubjectKeyIdentifier.from_public_key(key.public_key()), False)
+        .add_extension(x509.AuthorityKeyIdentifier.from_issuer_public_key(ca_key.public_key()), False)
+        .add_extension(x509.KeyUsage(
+            digital_signature=True, content_commitment=False,
+            key_encipherment=True, data_encipherment=False,
+            key_agreement=False, key_cert_sign=False, crl_sign=False,
+            encipher_only=False, decipher_only=False), True)
+        .add_extension(x509.ExtendedKeyUsage([
+            ExtendedKeyUsageOID.SERVER_AUTH if server else ExtendedKeyUsageOID.CLIENT_AUTH
+        ]), False))
     if server:
         builder = builder.add_extension(x509.SubjectAlternativeName([x509.DNSName("localhost")]), False)
     return key, builder.sign(ca_key, hashes.SHA256())
@@ -154,6 +166,13 @@ def tls_server(tmp_path):
         .public_key(ca_key.public_key()).serial_number(x509.random_serial_number())
         .not_valid_before(now - dt.timedelta(days=1)).not_valid_after(now + dt.timedelta(days=2))
         .add_extension(x509.BasicConstraints(ca=True, path_length=None), True)
+        .add_extension(x509.SubjectKeyIdentifier.from_public_key(ca_key.public_key()), False)
+        .add_extension(x509.AuthorityKeyIdentifier.from_issuer_public_key(ca_key.public_key()), False)
+        .add_extension(x509.KeyUsage(
+            digital_signature=False, content_commitment=False,
+            key_encipherment=False, data_encipherment=False,
+            key_agreement=False, key_cert_sign=True, crl_sign=True,
+            encipher_only=False, decipher_only=False), True)
         .sign(ca_key, hashes.SHA256()))
     (tmp_path / "ca.crt").write_bytes(ca.public_bytes(serialization.Encoding.PEM))
     for name, expired, server in (("server", False, True), ("client", False, False),
@@ -167,6 +186,13 @@ def tls_server(tmp_path):
                     .not_valid_before(now - dt.timedelta(days=1))
                     .not_valid_after(now + dt.timedelta(days=1))
                     .add_extension(x509.BasicConstraints(ca=True, path_length=None), True)
+                    .add_extension(x509.SubjectKeyIdentifier.from_public_key(untrusted_key.public_key()), False)
+                    .add_extension(x509.AuthorityKeyIdentifier.from_issuer_public_key(untrusted_key.public_key()), False)
+                    .add_extension(x509.KeyUsage(
+                        digital_signature=False, content_commitment=False,
+                        key_encipherment=False, data_encipherment=False,
+                        key_agreement=False, key_cert_sign=True, crl_sign=True,
+                        encipher_only=False, decipher_only=False), True)
                     .sign(untrusted_key, hashes.SHA256()))
     key, cert = issue_cert(untrusted_key, untrusted_ca, "controller")
     write_pem(tmp_path / "untrusted", key, cert)
