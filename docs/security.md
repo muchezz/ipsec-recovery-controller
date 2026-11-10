@@ -10,7 +10,7 @@
 - Raw SSH output and stderr are not returned to webhook clients; inspection failures carry only a structured error code.
 - Do not commit real gateway addresses, credentials, tokens, or internal alert payloads.
 - Metrics are unauthenticated: keep the listener on loopback.
-- Future releases need state verification, durable deduplication, and cooldowns before recovery mode.
+- Explicit recovery mode enforces state verification, persistent deduplication, locks, cooldowns and a storm breaker; see [recovery policy](recovery-policy.md).
 
 ## HTTPS agent
 
@@ -25,7 +25,7 @@ Agent snapshots are restricted to local connection mappings. `/v1/associations` 
 
 The Uvicorn protocol binds the verified TLS certificate to a connection-specific application wrapper. The wrapper populates each request scope before invoking the application, including requests on persistent connections. It only accepts peer certificates from a TLS context configured with CERT_REQUIRED. Do not replace this protocol with a stock HTTP server or trust identity headers.
 
-A strongSwan control socket may permit mutations as well as status inspection. Group or ACL access is therefore not necessarily a read-only operating-system permission. Audit the distribution's socket permissions; where that distinction is required, use a separately enforced diagnostic broker. The agent itself only executes allowlisted status commands and receives no root privileges or capabilities.
+A strongSwan control socket may permit mutations as well as status inspection. Group or ACL access is therefore not necessarily a read-only operating-system permission. Audit the distribution's socket permissions; where that distinction is required, use a separately enforced diagnostic broker. The agent executes diagnostic commands without root privileges or capabilities. Explicit recovery requires the independently authorized root helper operation described in [recovery deployment](recovery-deployment.md).
 
 
 For root-only legacy stroke sockets, use the optional fixed-operation [privileged diagnostics helper](privileged-diagnostics.md). The HTTPS agent stays unprivileged and can retain the direct backend where permissions allow.

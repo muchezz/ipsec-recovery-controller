@@ -11,6 +11,7 @@ from ipsec_recovery_controller.config import Connection, ServerConfig, StrictMod
 
 
 class AgentConnection(StrictModel):
+    recovery_enabled: bool = False
     ike_connection: str
     child_connection: str
     local_selector: str | None = None
@@ -26,6 +27,7 @@ class AgentConfig(StrictModel):
     server_key: str
     client_ca: str
     allowed_client_identity: str
+    recovery_enabled: bool = False
     inspection_backend: Literal["direct", "helper"] = "direct"
     helper_socket: str = "/run/ipsec-recovery-helper.sock"
     helper_timeout_seconds: float = Field(default=15, gt=0, le=120)

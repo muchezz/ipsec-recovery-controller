@@ -1,0 +1,18 @@
+# ROOT-OWNED policy. Loaded only with --recovery-config. Disabled by default.
+enabled: false
+policy:
+  state_directory: /var/lib/ipsec-recovery-helper
+  cooldown_seconds: 3600
+  storm_window_seconds: 300
+  storm_threshold: 10
+  breaker_seconds: 1800
+targets:
+  example-connection:
+    active_address: 192.0.2.10  # HA address owned exclusively by the active gateway
+    connection:
+      gateway: example-gateway
+      ike_connection: example-tunnel
+      child_connection: example-tunnel
+      local_selector: 10.10.0.0/24
+      remote_selector: 10.20.0.0/24
+      recovery_enabled: true  # Still blocked by enabled: false above

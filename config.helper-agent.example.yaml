@@ -11,5 +11,11 @@ helper_socket: /run/ipsec-recovery-helper.sock
 helper_timeout_seconds: 15
 connections:
   example-connection:
-    ike_connection: example-ike
-    child_connection: example-child
+    ike_connection: example-tunnel
+    child_connection: example-tunnel
+    local_selector: 10.10.0.0/24
+    remote_selector: 10.20.0.0/24
+    recovery_enabled: false
+# Recovery additionally requires recovery_enabled: true on each connection.
+# Match its IKE/CHILD names and selectors to the independent root helper policy.
+recovery_enabled: false

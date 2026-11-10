@@ -109,8 +109,24 @@ class AlertRule(StrictModel):
     match_labels: dict[str, str] = Field(default_factory=dict)
 
 
+class RecoveryPolicy(StrictModel):
+    state_directory: str = "/var/lib/ipsec-recovery-controller"
+    cooldown_seconds: int = Field(default=3600, ge=1800)
+    storm_window_seconds: int = Field(default=300, ge=60)
+    storm_threshold: int = Field(default=10, ge=1)
+    breaker_seconds: int = Field(default=1800, ge=300)
+
+    @field_validator("state_directory")
+    @classmethod
+    def absolute_state(cls, value: str) -> str:
+        if not Path(value).is_absolute():
+            raise ValueError("state directory must be absolute")
+        return value
+
+
 class Config(StrictModel):
-    mode: Literal["observe", "dry-run"] = "dry-run"
+    mode: Literal["observe", "dry-run", "recover"] = "dry-run"
+    recovery: RecoveryPolicy = Field(default_factory=RecoveryPolicy)
     server: ServerConfig = Field(default_factory=ServerConfig)
     gateways: dict[str, Gateway] = Field(default_factory=dict)
     connections: dict[str, Connection] = Field(default_factory=dict)
@@ -119,6 +135,8 @@ class Config(StrictModel):
     webhook_token: str | None = None
 
     def validate_mappings(self) -> None:
+        if self.mode == "recover" and not self.webhook_token:
+            raise ValueError("recovery requires webhook authentication")
         for name, connection in self.connections.items():
             if connection.gateway not in self.gateways:
                 raise ValueError(f"connection {name!r} references unknown gateway")

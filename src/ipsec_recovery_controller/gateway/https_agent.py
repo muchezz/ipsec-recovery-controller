@@ -70,3 +70,39 @@ class HTTPSAgentTransport:
             raise InspectionError("agent_unavailable") from exc
         except (ValueError, KeyError, TypeError, ValidationError) as exc:
             raise InspectionError("agent_malformed_response") from exc
+
+    def initiate(self, gateway: Gateway, connection_id: str, expected: Connection, event: str) -> str:
+        import json
+        import time
+        from urllib.parse import quote
+
+        from ipsec_recovery_controller.recovery import mapping_hash
+
+        expires = int(time.time()) + 60
+        endpoint = gateway.agent
+        assert endpoint is not None
+        try:
+            context = ssl.create_default_context(cafile=endpoint.ca_file)
+            context.load_cert_chain(endpoint.client_cert, endpoint.client_key)
+            with httpx.Client(verify=context, timeout=endpoint.request_timeout_seconds,
+                              trust_env=False) as client, client.stream(
+                "POST", f"{endpoint.url}/v1/connections/{quote(connection_id, safe='')}/initiate",
+                json={"event": event, "mapping": mapping_hash(expected), "expires": expires}
+            ) as response:
+                if response.status_code != 200:
+                    raise InspectionError("recovery_agent_failed")
+                body = bytearray()
+                for chunk in response.iter_bytes():
+                    if len(body) + len(chunk) > 1024:
+                        raise InspectionError("response_limit")
+                    body.extend(chunk)
+            data = json.loads(body)
+            if (set(data) != {"decision", "mapping"} or data["mapping"] != mapping_hash(expected)
+                    or data["decision"] not in {"recovered", "recovery_failed", "circuit_open",
+                                                "recovery_busy", "duplicate_alert", "cooldown"}):
+                raise InspectionError("agent_malformed_response")
+            return data["decision"]
+        except InspectionError:
+            raise
+        except (OSError, ValueError, TypeError, httpx.HTTPError) as exc:
+            raise InspectionError("recovery_agent_failed") from exc

@@ -6,6 +6,7 @@ import socket
 import subprocess
 import sys
 import threading
+import uuid
 
 import pytest
 
@@ -13,9 +14,9 @@ from ipsec_recovery_controller.gateway.ssh import InspectionError
 from ipsec_recovery_controller.helper import server
 
 
-def exchange(request, allowed_uid):
+def exchange(request, allowed_uid, recovery_config=None):
     client, broker = socket.socketpair()
-    thread = threading.Thread(target=lambda: _handle(broker, allowed_uid))
+    thread = threading.Thread(target=lambda: _handle(broker, allowed_uid, recovery_config))
     thread.start()
     with client:
         client.sendall(request)
@@ -28,9 +29,9 @@ def exchange(request, allowed_uid):
     return json.loads(result)
 
 
-def _handle(connection, uid):
+def _handle(connection, uid, recovery_config=None):
     with connection:
-        server.handle(connection, uid)
+        server.handle(connection, uid, recovery_config)
 
 
 def test_kernel_peer_credentials_deny_other_identity(monkeypatch):
@@ -190,11 +191,12 @@ def test_timeout_kills_descendants(monkeypatch, tmp_path):
         pytest.fail("descendant survived helper timeout")
 
 
-def test_client_rejects_non_root_socket_peer(tmp_path):
+def test_client_rejects_non_root_socket_peer():
     from ipsec_recovery_controller.gateway.helper import HelperTransport
     if os.getuid() == 0:
         pytest.skip("requires a non-root test process")
-    path = str(tmp_path / "helper.sock")
+    # Abstract namespace avoids Unix socket path limits in long checkout paths.
+    path = "\0ipsec-test-" + uuid.uuid4().hex
     with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as listener:
         listener.bind(path)
         listener.listen(1)
@@ -202,11 +204,12 @@ def test_client_rejects_non_root_socket_peer(tmp_path):
             HelperTransport(path).run(None, "ipsec statusall")
 
 
-def test_helper_transport_roundtrip(tmp_path, monkeypatch):
+def test_helper_transport_roundtrip(monkeypatch):
     from ipsec_recovery_controller.adapters.legacy_ipsec import parse_status
     from ipsec_recovery_controller.gateway import helper
 
-    path = str(tmp_path / "broker.sock")
+    # Abstract namespace avoids Unix socket path limits in long checkout paths.
+    path = "\0ipsec-test-" + uuid.uuid4().hex
     output = "Connections:\nSecurity Associations (0 up, 0 connecting):\n  none\n"
     # Positive protocol test is unprivileged; the separate test verifies real root-peer rejection.
     monkeypatch.setattr(helper, "peer_uid", lambda connection: 0)
@@ -224,3 +227,50 @@ def test_helper_transport_roundtrip(tmp_path, monkeypatch):
         assert not thread.is_alive()
         assert snapshot.connections_known
         assert not snapshot.ike_sas
+
+
+def test_optional_initiation_protocol_passes_only_validated_fields(monkeypatch):
+    import time
+
+    from ipsec_recovery_controller.helper import recovery
+
+    calls = []
+    monkeypatch.setattr(recovery, "recover", lambda *args: calls.append(args) or "recovered")
+    policy = object()
+    expires = int(time.time()) + 60
+    request = f"initiate configured-id {'a' * 64} {'b' * 64} {expires}\n".encode()
+    assert exchange(b"initiate configured-id\n", os.getuid()) == {"error": "helper_operation_not_allowed"}
+    assert exchange(request, os.getuid(), policy) == {"output": "recovered"}
+    assert calls == [(policy, "configured-id", "a" * 64, "b" * 64, expires)]
+    for bad in (request.replace(b"configured-id", b"--all"), request + b"extra",
+                request.replace(b"initiate", b"restart"), request.replace(b"configured-id", b"x;id")):
+        assert exchange(bad, os.getuid(), policy) == {"error": "helper_operation_not_allowed"}
+    assert len(calls) == 1
+
+
+def test_initiation_transport_timeout_is_bounded(monkeypatch):
+    from ipsec_recovery_controller.gateway import helper
+
+    monkeypatch.setattr(helper, "peer_uid", lambda connection: 0)
+    # Abstract namespace avoids Unix socket path limits in long checkout paths.
+    path = "\0ipsec-test-" + uuid.uuid4().hex
+    release = threading.Event()
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as listener:
+        listener.bind(path)
+        listener.listen(1)
+
+        def accept_without_reply():
+            connection, _ = listener.accept()
+            with connection:
+                release.wait(2)
+
+        thread = threading.Thread(target=accept_without_reply)
+        thread.start()
+        try:
+            with pytest.raises(InspectionError, match="timeout"):
+                helper.HelperTransport(path, timeout_seconds=0.05).initiate(
+                    "configured-id", "a" * 64, "b" * 64, 1)
+        finally:
+            release.set()
+            thread.join(timeout=3)
+        assert not thread.is_alive()

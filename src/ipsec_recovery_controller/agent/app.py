@@ -4,6 +4,7 @@ from cryptography import x509
 from cryptography.x509.oid import NameOID
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel, ConfigDict, Field
 from starlette.concurrency import run_in_threadpool
 
 from ipsec_recovery_controller.adapters.legacy_ipsec import LegacyIPsecAdapter
@@ -56,6 +57,13 @@ def filter_snapshot(snapshot: GatewaySnapshot, mappings) -> GatewaySnapshot:
                            snapshot.source, snapshot.connections_known)
 
 
+class Initiation(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    expires: int
+    event: str = Field(pattern=r"^[a-f0-9]{64}$")
+    mapping: str = Field(pattern=r"^[a-f0-9]{64}$")
+
+
 def create_app(config: AgentConfig, transport: LocalTransport | HelperTransport | None = None) -> FastAPI:
     config.validate_mappings()
     transport = transport or (
@@ -63,7 +71,7 @@ def create_app(config: AgentConfig, transport: LocalTransport | HelperTransport 
         if config.inspection_backend == "helper" else
         LocalTransport(config.ipsec_binary, config.command_timeout_seconds)
     )
-    app = FastAPI(title="IPsec Recovery Agent", version="0.3.0", docs_url=None, redoc_url=None)
+    app = FastAPI(title="IPsec Recovery Agent", version="0.4.0", docs_url=None, redoc_url=None)
 
     def authorize(request: Request) -> None:
         der = request.scope.get("client_cert_der")
@@ -106,6 +114,25 @@ def create_app(config: AgentConfig, transport: LocalTransport | HelperTransport 
             raise HTTPException(503, detail={"code": exc.code}) from None
         diagnostic = evaluate_snapshot(expected.expected(), snapshot)
         return jsonable_encoder({"api_version": "v1", "snapshot": snapshot,
-                                 "mapping": expected.model_dump(), "diagnostic": diagnostic})
+                                 "mapping": expected.model_dump(exclude={"recovery_enabled"}), "diagnostic": diagnostic})
+
+    @app.post("/v1/connections/{connection_id}/initiate")
+    async def initiate(request: Request, connection_id: str, body: Initiation):
+        authorize(request)
+        from ipsec_recovery_controller.recovery import audit, mapping_hash
+
+        expected = config.connections.get(connection_id)
+        if (not config.recovery_enabled or expected is None or not expected.recovery_enabled
+                or not isinstance(transport, HelperTransport)
+                or body.mapping != mapping_hash(expected)):
+            audit(connection_id, "recovery_not_allowed", body.event)
+            raise HTTPException(403, detail={"code": "recovery_not_allowed"})
+        try:
+            decision = await run_in_threadpool(transport.initiate, connection_id, body.event, body.mapping, body.expires)
+        except InspectionError as exc:
+            audit(connection_id, exc.code, body.event)
+            raise HTTPException(503, detail={"code": exc.code}) from None
+        audit(connection_id, decision, body.event)
+        return {"decision": decision, "mapping": body.mapping}
 
     return app

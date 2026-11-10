@@ -3,7 +3,7 @@ from __future__ import annotations
 import hmac
 import json
 import logging
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Request
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, generate_latest
@@ -35,16 +35,18 @@ DIAGNOSTICS = Counter(
 
 class Alert(BaseModel):
     model_config = ConfigDict(extra="ignore")
-    status: str
+    status: Literal["firing", "resolved"]
     labels: dict[str, str]
     fingerprint: str | None = None
+    startsAt: str | None = None
 
 
 class Webhook(BaseModel):
     model_config = ConfigDict(extra="ignore")
     version: str
-    status: str
+    status: Literal["firing", "resolved"]
     receiver: str
+    truncatedAlerts: int = 0
     alerts: list[Alert]
 
 
@@ -76,6 +78,15 @@ def evaluate(config: Config, payload: Webhook, inspector: Inspector | None = Non
             decision = "observed"
             connection_label = connection
             diagnostic = None
+        elif config.mode == "recover" and payload.truncatedAlerts != 0:
+            connection_label = connection
+            diagnostic = None
+            decision = "recovery_truncated_alerts"
+        elif config.mode == "recover":
+            from ipsec_recovery_controller.recovery import recover_alert
+            connection_label = connection
+            diagnostic = None
+            decision = recover_alert(config, connection, alert)
         else:
             connection_label = connection
             try:
@@ -128,7 +139,8 @@ def evaluate(config: Config, payload: Webhook, inspector: Inspector | None = Non
 
 
 def create_app(config: Config, inspector: Inspector | None = None) -> FastAPI:
-    app = FastAPI(title="IPsec Recovery Controller", version="0.3.0", docs_url=None, redoc_url=None)
+    config.validate_mappings()
+    app = FastAPI(title="IPsec Recovery Controller", version="0.4.0", docs_url=None, redoc_url=None)
 
     @app.get("/healthz")
     async def healthz() -> dict[str, str]:
@@ -151,12 +163,15 @@ def create_app(config: Config, inspector: Inspector | None = None) -> FastAPI:
                     raise HTTPException(status_code=413, detail="payload too large")
             except ValueError:
                 raise HTTPException(status_code=400, detail="invalid content-length")
-        body = await request.body()
-        if len(body) > config.max_payload_bytes:
-            raise HTTPException(status_code=413, detail="payload too large")
+        body = bytearray()
+        async for chunk in request.stream():
+            if len(body) + len(chunk) > config.max_payload_bytes:
+                raise HTTPException(status_code=413, detail="payload too large")
+            body.extend(chunk)
         try:
             payload = Webhook.model_validate_json(body)
         except ValidationError:
+            log.warning("audit_event invalid_alertmanager_webhook")
             WEBHOOKS.labels(outcome="invalid").inc()
             raise HTTPException(status_code=422, detail="invalid Alertmanager webhook") from None
         if payload.version != "4":
@@ -164,6 +179,8 @@ def create_app(config: Config, inspector: Inspector | None = None) -> FastAPI:
             raise HTTPException(status_code=422, detail="unsupported Alertmanager webhook version")
         decisions = await run_in_threadpool(evaluate, config, payload, inspector)
         WEBHOOKS.labels(outcome="accepted").inc()
-        return {"mode": config.mode, "decisions": decisions, "recovery_executed": False}
+        return {"mode": config.mode, "decisions": decisions, "recovery_executed": (
+            None if any(d["decision"] == "recovery_failed" for d in decisions)
+            else any(d["decision"] == "recovered" for d in decisions))}
 
     return app

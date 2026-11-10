@@ -1,0 +1,10 @@
+# Linux build toolchain. Release artifacts use Python 3.12.
+build==1.6.1
+hatchling==1.33.0
+packaging==26.3
+pathspec==1.1.1
+pluggy==1.7.0
+pyproject-hooks==1.3.3
+tomlkit==0.15.2
+trove-classifiers==2026.9.21.13
+tomli==2.2.1; python_version < '3.11'

@@ -1,0 +1,17 @@
+Status of IKE charon daemon (strongSwan 5.8.2, Linux 6.8.0-147-generic, x86_64):
+Connections:
+isolated-test:  127.0.0.1...127.0.0.2  IKEv2
+isolated-test:   local:  [isolated-left] uses pre-shared key authentication
+isolated-test:   remote: [isolated-right] uses pre-shared key authentication
+isolated-test:   child:  10.10.0.0/24 === 10.20.0.0/24 TUNNEL
+isolated-responder:  %any...%any  IKEv2
+isolated-responder:   local:  [isolated-right] uses pre-shared key authentication
+isolated-responder:   remote: [isolated-left] uses pre-shared key authentication
+isolated-responder:   child:  10.20.0.0/24 === 10.10.0.0/24 TUNNEL
+Security Associations (2 up, 0 connecting):
+isolated-responder[2]: ESTABLISHED 4 seconds ago, 127.0.0.2[isolated-right]...127.0.0.1[isolated-left]
+isolated-responder[2]: IKEv2 SPIs: 0000000000000001_i 0000000000000002_r*, pre-shared key reauthentication in 2 hours
+isolated-responder[2]: IKE proposal: AES_CBC_128/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/ECP_256
+isolated-test[1]: ESTABLISHED 4 seconds ago, 127.0.0.1[isolated-left]...127.0.0.2[isolated-right]
+isolated-test[1]: IKEv2 SPIs: 0000000000000001_i* 0000000000000002_r, pre-shared key reauthentication in 2 hours
+isolated-test[1]: IKE proposal: AES_CBC_128/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/ECP_256

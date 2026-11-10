@@ -351,3 +351,31 @@ def test_response_validation_fails_closed(mutation):
         data["snapshot"]["child_sas"].append(data["snapshot"]["child_sas"][0])
     with pytest.raises((ValueError, TypeError, InspectionError)):
         validate_response(data, expected)
+
+
+def test_recovery_agent_requires_all_switches_mapping_and_helper(tmp_path, monkeypatch):
+    from ipsec_recovery_controller.gateway.helper import HelperTransport
+    from ipsec_recovery_controller.recovery import mapping_hash
+
+    cfg = config(tmp_path)
+    cfg.recovery_enabled = True
+    cfg.connections["connection-1"].recovery_enabled = True
+    calls = []
+    helper = HelperTransport("/unused")
+    monkeypatch.setattr(helper, "initiate", lambda *args: calls.append(args) or "recovered")
+    app = create_app(cfg, helper)
+    body = {"event": "a" * 64, "mapping": mapping_hash(cfg.connections["connection-1"]), "expires": int(time.time()) + 60}
+    path = "/v1/connections/connection-1/initiate"
+    assert TestClient(app).post(path, json=body).status_code == 401
+    app = create_app(cfg, helper)
+    app.add_middleware(CertMiddleware)
+    client = TestClient(app)
+    assert client.post(path, json=body).json()["decision"] == "recovered"
+    assert len(calls) == 1
+    assert client.post(path, json=body | {"mapping": "b" * 64}).status_code == 403
+    cfg.connections["connection-1"].recovery_enabled = False
+    assert client.post(path, json=body).status_code == 403
+    cfg.connections["connection-1"].recovery_enabled = True
+    cfg.recovery_enabled = False
+    assert client.post(path, json=body).status_code == 403
+    assert len(calls) == 1

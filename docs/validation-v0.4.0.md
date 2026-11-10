@@ -1,0 +1,15 @@
+# v0.4.0 validation evidence
+
+Automated coverage includes 30 simultaneous authenticated webhook deliveries with both normal admission and storm thresholds, actual subprocess crash/restart persistence, duplicate and negotiating/deleting CHILD_SAs, Unix-helper timeouts and uncertain remote outcomes, selector/mapping mismatch, HA loss immediately before and after initiation, unsupported versions, missing/empty/corrupt state, and controller/agent/helper authentication failures. Existing live local mTLS tests exercise trusted clients, untrusted clients, hostname verification and identity rejection. All gateway mutations in the Python tests use synthetic transports.
+
+## Isolated strongSwan 5.8.2 smoke test
+
+On 2026-11-10, upstream `strongswan-5.8.2.tar.bz2` was downloaded from `https://download.strongswan.org/strongswan-5.8.2.tar.bz2` (SHA256 `86900ddbe7337c923dadf2c8339ae8ed2b9158e3691745884d08ae534677430e`). The source was built and installed under an ignored repository-local validation directory, inside `node:20-bookworm` (`sha256:8f693eaa7e0a8e71560c9a82b55fd54c2ae920a2ba5d2cde28bac7d1c01c9ba5`). Build and runtime containers had no network connectivity (`--network none`), a read-only root filesystem, no host service/socket mounts, and only the validation directory mounted for output. The runtime added narrowly scoped container capabilities for its own network namespace and test files; no host network mode or privileged container was used.
+
+The source build used charon, starter, stroke, IKEv2, kernel-netlink, socket-default, OpenSSL, random, nonce, HMAC, SHA2, AES, PEM, pubkey and X509 plugins. A test-only PSK authenticated loopback peers `127.0.0.1` and `127.0.0.2`. Runtime version reported `strongSwan U5.8.2`. Loaded selectors matched `10.10.0.0/24 === 10.20.0.0/24 TUNNEL`. Targeted stroke initiation selected `isolated-test`, successfully authenticated IKE, and left the IKE_SA established when outbound kernel SA installation failed. The real missing-CHILD status excerpt is retained as a sanitized regression fixture.
+
+This validates daemon/version output, loaded selector formatting, targeted stroke selection, real IKE negotiation and recognition of an established-IKE/missing-CHILD state. The container could not install its outbound kernel IPsec SA. Successful CHILD installation, end-to-end helper recovery and traffic flow were **not** demonstrated. Distribution-specific strongSwan 5.8.2 and HA fencing still require staging validation. No production host, service or tunnel was accessed, changed or activated.
+
+## Release checks
+
+The release workflow reruns the full Python suite, lint, compilation and dependency checks from the exact main/tag commit. `scripts/build_release.py` compares two independent artifact builds byte for byte. The published `BUILD-INFO.json` records commit, timestamp, Python and pinned build tools; `SHA256SUMS` covers the wheel, source distribution and provenance file. See the workflow conclusion and release assets for final results.

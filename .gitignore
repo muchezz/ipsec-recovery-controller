@@ -10,3 +10,6 @@ config.yaml
 *.db
 *.pem
 id_ed25519*
+
+# Local release build and validation evidence
+.release-work/

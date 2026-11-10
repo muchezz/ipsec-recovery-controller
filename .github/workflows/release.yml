@@ -8,38 +8,44 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      - name: Install build tools
-        run: python -m pip install build
-
-      - name: Build distributions
-        run: python -m build
-
-      - name: Generate checksums
+      - name: Verify exact main commit and version
         run: |
-          cd dist
-          sha256sum *.whl *.tar.gz > SHA256SUMS
-
-      - name: Publish GitHub Release
+          git fetch origin main
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)"
+          test "$GITHUB_REF_NAME" = "v0.4.0"
+      - name: Install test and pinned build tools
+        run: python -m pip install -e ".[test]" -r requirements-build.txt
+      - name: Release-blocking checks
+        run: |
+          ruff check .
+          pytest -q -ra
+          python -m compileall -q src/
+          python -m pip check
+      - name: Build and verify reproducibility
+        run: python scripts/build_release.py
+      - name: Publish verified artifacts
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${GITHUB_REF_NAME}" \
-            dist/*.whl \
-            dist/*.tar.gz \
-            dist/SHA256SUMS \
-            --title "${GITHUB_REF_NAME}" \
-            --generate-notes \
+          gh release create "$GITHUB_REF_NAME" \
+            dist/release/first/*.whl \
+            dist/release/first/*.tar.gz \
+            dist/release/first/BUILD-INFO.json \
+            dist/release/first/SHA256SUMS \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file docs/release-v0.4.0.md \
             --verify-tag

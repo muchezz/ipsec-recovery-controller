@@ -2,7 +2,7 @@
 
 A small, safe Alertmanager webhook controller for strongSwan IPsec diagnostics. Requires Python 3.10 or later; gateway inspection and the privileged helper require Linux.
 
-**v0.3.0 is read-only.** It validates Alertmanager v4 webhooks, maps alert labels to configured connections, records audit decisions, and exposes Prometheus metrics. `observe` does not connect to gateways. `dry-run` inspects legacy strongSwan gateways over SSH or a gateway-local HTTPS agent. Neither mode changes IPsec state.
+**v0.4.0 defaults to read-only operation.** It validates Alertmanager v4 webhooks, maps alert labels to configured connections, records audit decisions, and exposes Prometheus metrics. `observe` does not connect to gateways. `dry-run` inspects legacy strongSwan gateways over SSH or a gateway-local HTTPS agent. Neither mode changes IPsec state.
 
 ## Quick start
 
@@ -43,3 +43,5 @@ Apache License 2.0. See LICENSE.
 For root-only legacy stroke sockets, use the optional fixed-operation [privileged diagnostics helper](docs/privileged-diagnostics.md). The HTTPS agent stays unprivileged and can retain the direct backend where permissions allow.
 
 See the [Python compatibility review](docs/python-compatibility.md) for tested interpreters and dependency versions.
+
+v0.4.0 adds explicitly enabled, allowlisted CHILD_SA recovery through the mTLS agent and privileged helper. Defaults remain read-only. See the [recovery policy](docs/recovery-policy.md), [deployment preparation](docs/recovery-deployment.md), and [disabled helper policy example](config.recovery-helper.example.yaml). No PagerDuty or Mattermost routing changes are required.

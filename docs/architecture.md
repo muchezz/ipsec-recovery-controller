@@ -12,9 +12,11 @@ Alert rules may share a name when `match_labels` explicitly selects different co
 
 When legacy CHILD SAs share the same name, configure optional `local_selector` and `remote_selector` on separate connection entries to identify the expected association. If the gateway omits selectors needed for matching, the result is `unknown`.
 
-No recovery policy runs in this release. `observe` validates, audits, and counts events without gateway contact. `dry-run` inspects. Agent outages, certificate failures, timeouts, mapping mismatches, and command errors fail closed as `inspection_failed` with a structured error code. They never trigger recovery.
+Recovery is an explicit opt-in through the mTLS agent and independent root helper policy; see [recovery policy](recovery-policy.md). `observe` validates, audits, and counts events without gateway contact. `dry-run` inspects. Agent outages, certificate failures, timeouts, mapping mismatches, and command errors fail closed as `inspection_failed` with a structured error code. They never trigger recovery.
 The service is single-process. No queue or persistent deduplication is implemented yet.
 The HTTP response means the event was evaluated in-process, not durably queued.
 
 
 For root-only legacy stroke sockets, use the optional fixed-operation [privileged diagnostics helper](privileged-diagnostics.md). The HTTPS agent stays unprivileged and can retain the direct backend where permissions allow.
+
+In `recover`, configured alert mappings pass through persistent controller admission to the agent initiation endpoint. The helper checks mapping agreement, persistent local admission, HA ownership, strongSwan version, loaded selectors and live SAs before targeted initiation, then verifies the installed CHILD_SA. All other transports remain read-only.

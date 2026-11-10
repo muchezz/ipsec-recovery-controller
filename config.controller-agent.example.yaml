@@ -18,10 +18,23 @@ gateways:
 connections:
   example-connection:
     gateway: example-gateway
-    ike_connection: example-ike
-    child_connection: example-child
+    ike_connection: example-tunnel
+    child_connection: example-tunnel
+    local_selector: 10.10.0.0/24
+    remote_selector: 10.20.0.0/24
+    recovery_enabled: false
 alerts:
-  - name: ExampleIPsecTunnelMissing
+  - name: PakakobeIPsecTunnelMissing
     connection: example-connection
     match_labels:
       peer: example-partner
+# For recovery, use mode: recover and provide IPSEC_CONTROLLER_WEBHOOK_TOKEN.
+# The alert rule must be PakakobeIPsecTunnelMissing. Retain existing match_labels.
+# Set recovery_enabled: true on each authorized connection and use the exact
+# names/selectors in config.recovery-helper.example.yaml and the agent allowlist.
+recovery:
+  state_directory: /var/lib/ipsec-recovery-controller
+  cooldown_seconds: 3600
+  storm_window_seconds: 300
+  storm_threshold: 10
+  breaker_seconds: 1800

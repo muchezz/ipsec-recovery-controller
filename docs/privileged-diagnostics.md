@@ -1,10 +1,12 @@
+> This document describes the default diagnostics-only helper. v0.4.0 adds an optional `--recovery-config` policy and disabled-by-default initiation operation; see [recovery deployment](recovery-deployment.md). Without that option, the original 32-byte, status-only protocol remains unchanged. With it, requests are bounded to 512 bytes and a two-second deadline; `initiate <configured-id> <incident-sha256> <mapping-sha256> <expiry-unix-seconds>\n` is the only extra operation. The agent cannot choose executable names or command arguments.
+
 # Privileged legacy diagnostics
 
 On gateways where stroke's `/run/charon.ctl` is root:root 0770, the HTTPS agent must not receive root, sudo, a privileged group, or direct socket access. The optional helper runs independently as root and brokers only `/usr/sbin/ipsec statusall`. The controller still chooses SSH or HTTPS; this backend selection is local to the HTTPS agent.
 
 ## Deployment
 
-Install the same pinned v0.3.0 wheel in separately provisioned virtual environments on the hosts needing each role. The helper executable is `ipsec-recovery-diagnostics-helper`; it does not start the controller or HTTPS agent. Its virtual environment, dependencies, binary, systemd units, and parent directories must be root-owned and not writable by the agent. Avoid user site packages and PYTHONPATH overrides for the root service. The system `ipsec` executable, wrapper scripts and their configuration must also be trusted and root-owned.
+Install the same pinned v0.4.0 wheel in separately provisioned virtual environments on the hosts needing each role. The helper executable is `ipsec-recovery-diagnostics-helper`; it does not start the controller or HTTPS agent. Its virtual environment, dependencies, binary, systemd units, and parent directories must be root-owned and not writable by the agent. Avoid user site packages and PYTHONPATH overrides for the root service. The system `ipsec` executable, wrapper scripts and their configuration must also be trusted and root-owned.
 
 Create a dedicated unprivileged `ipsec-agent` service user/group, without login access or membership in groups granting stroke access. Install the provided helper `.socket` and `.service` units. systemd creates `/run/ipsec-recovery-helper.sock` as root:ipsec-agent 0660 in the existing root-owned `/run` directory. Do not precreate or chown this socket manually. Enable/start `ipsec-recovery-diagnostics-helper.socket`; the service starts on first connection. `Accept=no` is implicit: a single service serializes requests. Backlog is four; excess or delayed clients may time out, never execute recovery.
 
